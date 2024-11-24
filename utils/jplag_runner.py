@@ -27,10 +27,3 @@ def run_jplag(jplag_path, dir_source, dir_output):
         subprocess.run(prompt,check=True)
     except subprocess.CalledProcessError as e: # handle error with return code (check = True)
         print(f"The prompt failed with the return code: {e.returncode}")
-
-#run_jplag("C:/Users/claud/OneDrive/Ambiente de Trabalho/Projeto Final/jplagsegundogithub/jplag.jar",
-#          "./data/Ficha03_041",
-#          "./output/resultado")
-
-
-#java -jar jplag.jar -l java ./Testes/Testes/Ficha03_041 -r ./resultados/resultado
