@@ -47,3 +47,4 @@ for file_name in json_files:
 
 with open("./output/mydata.json", "w") as final:
 	json.dump(extracted_data, final)
+     
