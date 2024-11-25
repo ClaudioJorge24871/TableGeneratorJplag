@@ -45,5 +45,5 @@ for file_name in json_files:
 
     os.remove(file_path)
 
-with open("mydata.json", "w") as final:
+with open("./output/mydata.json", "w") as final:
 	json.dump(extracted_data, final)
