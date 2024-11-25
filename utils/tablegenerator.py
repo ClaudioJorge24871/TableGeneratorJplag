@@ -65,7 +65,31 @@ def generate_comparison_table(json_file_path):
                       columns=students)
     
     # Creates similarity and originality columns
+    similarity_column = []
+    originality_column = []
 
+    for student_index in range(len(students)):
+        similarities = df.iloc[student_index] # Locates similarities by student index
+        max_similarity = similarities.max()
+        similarity_column.append(max_similarity)
 
+        # Classifies as high_similarity if has a value above or equal to THRESHOLD
+        high_similarities = [sim for sim in SimilarityMap.get(student_index,[])
+                             if sim >= THRESHOLD]
+        
+        # Originality values as the times there was a high_similarity (starts at 100%) 
+        originality = 100 / (len(high_similarities) + 1) if high_similarities else 100
+        originality_column.append(originality)
+        
+    # Add the similarity and originality columns to the DataFRAME~
+    df['Similarity'] = similarity_column
+    df['Originality'] = originality_column
+
+    # Estilzar numeros
+    # Arranjar forma de visualizar os resultados do dataframe
+
+    print(df)
+
+generate_comparison_table("./output/mydata.json")
 
 
