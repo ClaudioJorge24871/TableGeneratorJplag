@@ -16,6 +16,15 @@ TABLEOUTPUT = PROJECT_ROOT / "output"
 TABLEPATH = PROJECT_ROOT / "output" / "comparison_table.html"
 
 def main():
+
+    # Checks if theres a previous table on TABLEPATH
+    if TABLEPATH.exists():
+        try:
+            TABLEPATH.unlink()
+        except Exception as e:
+            print(f"Error deleting {TABLEPATH}: {e}")
+
+
     # Run Jplag calling run_jplag method
     run_jplag(JPLAGPATH,SOURCEDIR,OUTPUTDIR)
 
@@ -26,7 +35,7 @@ def main():
     generate_comparison_table(JSONFILEPATH,TABLEOUTPUT)
 
     # After generatic table, deletes auxiliary files
-    delete_files_except(TABLEOUTPUT,TABLEPATH)
+    delete_files_except(TABLEOUTPUT,[TABLEPATH])
 
 def delete_files_except(folder_path, keep_files):
     """
@@ -47,8 +56,6 @@ def delete_files_except(folder_path, keep_files):
                 print(f"Deleted: {filename}")
             except Exception as e:
                 print(f"Error deleting {filename}: {e}")
-
-
 
 
 if __name__ == "__main__":
