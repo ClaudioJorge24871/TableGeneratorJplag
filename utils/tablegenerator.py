@@ -4,8 +4,9 @@
 import json
 import numpy as np
 import pandas as pd
+import os
 
-def generate_comparison_table(json_file_path):
+def generate_comparison_table(json_file_path,table_output):
     """
     Generates the comparison table given the path to the json file created
     The table has a list of students as its rows and columns
@@ -82,8 +83,10 @@ def generate_comparison_table(json_file_path):
         originality_column.append(originality)
         
     # Add the similarity and originality columns to the DataFRAME~
-    df['Similarity'] = [round(100 * x,2) for x in similarity_column]
-    df['Originality'] = [round(100 * x,2) for x in originality_column]
+    df['Similarity'] = similarity_column
+    df['Originality'] = originality_column
+
+    df.to_html(os.path.join(table_output, 'comparison_table.html'), index=True)
 
 
 

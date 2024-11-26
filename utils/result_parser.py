@@ -2,15 +2,16 @@ import json
 import zipfile
 import os
 
-def parse_results(zip_file_path,output_directory):
+def parse_results(zip_file_path,json_file_path):
     """
     Creates a JSON file ease to transform later in table 
       given the path to the results file 
     
     PARAMS:
-        zip_file_path - path to the zip file results created by JPLAG 
         output_directory - path to the output folder
     """
+
+    output_directory = "./output"
 
     # Open and extract all files to the specified output_directory
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
@@ -47,9 +48,10 @@ def parse_results(zip_file_path,output_directory):
 
         # Clears the files on output directory
         os.remove(file_path)
+    
 
     # Creates a file named mydata.json
-    with open("./output/mydata.json", "w") as final:
+    with open(json_file_path, "w") as final:
         # Serializes obj to JSON 
         json.dump(extracted_data, final)
         

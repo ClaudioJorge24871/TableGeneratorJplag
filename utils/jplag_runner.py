@@ -27,3 +27,5 @@ def run_jplag(jplag_path, dir_source, dir_output):
         subprocess.run(prompt,check=True)
     except subprocess.CalledProcessError as e: # Handle error with return code (check = True)
         print(f"The prompt failed with the return code: {e.returncode}")
+
+    
