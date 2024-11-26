@@ -48,7 +48,7 @@ def generate_comparison_table(json_file_path,table_output):
     for comparison in data:
         index_student1 = students.index(comparison['id1'])
         index_student2 = students.index(comparison['id2'])
-        similarity = round(100*float(comparison['MAX']),2)
+        similarity = round(100*float(comparison['MAX']),1)
         similarity_matrix[index_student1,index_student2] = similarity
         similarity_matrix[index_student2,index_student1] = similarity
 
@@ -76,14 +76,14 @@ def generate_comparison_table(json_file_path,table_output):
                              if sim >= THRESHOLD]
         
         # Originality values as the times there was a high_similarity (starts at 100%) 
-        originality = round(100 / len(high_similarities),2) if high_similarities else 100
+        originality = (int) (100 / len(high_similarities)) if high_similarities else 100
         originality_column.append(originality)
         
     # Add the similarity and originality columns to the DataFRAME~
     df['Similarity'] = similarity_column
     df['Originality'] = originality_column
 
+    # Format the Originality column as percentages
+    df['Originality'] = df['Originality'].apply(lambda x: f"{x}%")
+
     df.to_html(os.path.join(table_output, 'comparison_table.html'), index=True)
-
-
-
