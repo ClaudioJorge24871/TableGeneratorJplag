@@ -16,7 +16,7 @@ def generate_comparison_table(json_file_path,table_output):
     PARAMS:
         json_file_path - path to the json file which contains the data to set on the table
     """
-    THRESHOLD = 0.9
+    THRESHOLD = 90
 
     # Reads json file and loads the data
     with open(json_file_path,'r') as f:
@@ -76,7 +76,7 @@ def generate_comparison_table(json_file_path,table_output):
                              if sim >= THRESHOLD]
         
         # Originality values as the times there was a high_similarity (starts at 100%) 
-        originality = 100 / (len(high_similarities) + 1) if high_similarities else 100
+        originality = round(100 / len(high_similarities),2) if high_similarities else 100
         originality_column.append(originality)
         
     # Add the similarity and originality columns to the DataFRAME~
