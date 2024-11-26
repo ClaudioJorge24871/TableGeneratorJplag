@@ -78,6 +78,9 @@ def generate_comparison_table(json_file_path,table_output):
         # Originality values as the times there was a high_similarity (starts at 100%) 
         originality = (int) (100 / len(high_similarities)) if high_similarities else 100
         originality_column.append(originality)
+
+    # Add the Student Column to the DataFrame
+    df['Student'] = students
         
     # Add the similarity and originality columns to the DataFRAME~
     df['Similarity'] = similarity_column
