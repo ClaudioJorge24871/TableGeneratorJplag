@@ -50,7 +50,7 @@ def generate_comparison_table(json_file_path):
     for comparison in data:
         index_student1 = students.index(comparison['id1'])
         index_student2 = students.index(comparison['id2'])
-        similarity = float(comparison['MAX'])
+        similarity = round(100*float(comparison['MAX']),2)
         similarity_matrix[index_student1,index_student2] = similarity
         similarity_matrix[index_student2,index_student1] = similarity
 
@@ -82,14 +82,8 @@ def generate_comparison_table(json_file_path):
         originality_column.append(originality)
         
     # Add the similarity and originality columns to the DataFRAME~
-    df['Similarity'] = similarity_column
-    df['Originality'] = originality_column
+    df['Similarity'] = [round(100 * x,2) for x in similarity_column]
+    df['Originality'] = [round(100 * x,2) for x in originality_column]
 
-    # Estilzar numeros
-    # Arranjar forma de visualizar os resultados do dataframe
-
-    print(df)
-
-generate_comparison_table("./output/mydata.json")
 
 
