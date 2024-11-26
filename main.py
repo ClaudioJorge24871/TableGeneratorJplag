@@ -3,6 +3,7 @@ from utils.result_parser import parse_results
 from utils.tablegenerator import generate_comparison_table
 import os
 from pathlib import Path
+import webbrowser
 
 # Get the absolute path of the project root
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -34,8 +35,14 @@ def main():
     # Generates a HTMl link with the table of comparisons
     generate_comparison_table(JSONFILEPATH,TABLEOUTPUT)
 
-    # After generatic table, deletes auxiliary files
+    # After generating table, deletes auxiliary files
     delete_files_except(TABLEOUTPUT,[TABLEPATH])
+
+    # Opens the comparison table after creation
+    try:
+        webbrowser.open(f"file://{TABLEPATH.resolve()}")
+    except Exception as e:
+        print(f"Error opening the file in browser: {e}")
 
 def delete_files_except(folder_path, keep_files):
     """
