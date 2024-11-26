@@ -1,6 +1,3 @@
-#atenção!!
-#após utilizar o ficheiro mydata.json, eliminá-lo do programa. 
-
 import json
 import numpy as np
 import pandas as pd
