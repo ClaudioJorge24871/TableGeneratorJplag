@@ -4,40 +4,61 @@ def style_table(df):
     if df is None:
         raise ValueError("The DataFrame is None, cannot style a NoneType object.")
     
-    def color_similarity(val):
-        """Assign color classes based on similarity value."""
-
+    def color_similarity(val, is_originality=False):
+        """Assign color classes based on similarity or originality value."""
         if isinstance(val, (int, float)):
-            if val <= 50 and val > 0:
-                op = 1 - (val / 70)
-                return f'background-color: rgba(128,255,128,{op}); color: black;'
-            elif val <= 90 and val > 0:
-                op = (val / 90) 
-                return f'background-color: rgba(255,174,0,{op}); color: black;'
-            elif val <= 100 and val > 0:
-                op = (val / 100)
-                return f'background-color: rgba(255,113,70,{op}); color: white;'
-            else:
-                return 'background-color: rgb(173,216,230); color: black;'
+            if is_originality:  # Logic for Originality (inverse colors)
+                if val <= 50 and val > 0:
+                    op = 1 - (val / 70)
+                    return f'background-color: rgba(255,113,70,{op}); color: white;'  # Red
+                elif val <= 90 and val > 0:
+                    op = (val / 90)
+                    return f'background-color: rgba(255,174,0,{op}); color: black;'  # Orange
+                elif val <= 100 and val > 0:
+                    op = (val / 100)
+                    return f'background-color: rgba(128,255,128,{op}); color: black;'  # Green
+                else:
+                    return 'background-color: rgb(173,216,230); color: black;'  # Default Light Blue
+            else:  # Logic for Similarity (original colors)
+                if val <= 50 and val > 0:
+                    op = 1 - (val / 70)
+                    return f'background-color: rgba(128,255,128,{op}); color: black;'  # Green
+                elif val <= 90 and val > 0:
+                    op = (val / 90)
+                    return f'background-color: rgba(255,174,0,{op}); color: black;'  # Orange
+                elif val <= 100 and val > 0:
+                    op = (val / 100)
+                    return f'background-color: rgba(255,113,70,{op}); color: white;'  # Red
+                else:
+                    return 'background-color: rgb(173,216,230); color: black;'  # Default Light Blue
         return ''
+    
+    def highlight_students(val):
+        """Apply light-blue background to Students column."""
+        return 'background-color: lightblue; color: black;'
     
     df = df.round(1)
 
     # Create styled DataFrame
     styled_df = df.style\
-        .applymap(color_similarity, subset=pd.IndexSlice[:, df.columns[:-2]])\
-        .applymap(color_similarity, subset=['Similarity', 'Originality'])\
+        .applymap(highlight_students, subset=['Student'])\
+        .applymap(lambda val: color_similarity(val, is_originality=False), subset=pd.IndexSlice[:, df.columns[:-2]])\
+        .applymap(lambda val: color_similarity(val, is_originality=True), subset=['Originality'])\
+        .applymap(lambda val: color_similarity(val, is_originality=False), subset=['Similarity'])\
         .set_table_attributes('style="border-collapse: collapse;"')\
         .set_table_styles([
             {'selector': 'th', 'props': [('background-color', 'lightblue'), 
-                                         ('color', 'black'), 
-                                         ('border', '1px solid black')]},
+                                        ('color', 'black'), 
+                                        ('border', '1px solid black')]},
             {'selector': 'td', 'props': [('border', '1px solid gray'), 
-                                         ('text-align', 'center')]}
+                                        ('text-align', 'center')]},
         ])
 
-    styled_df = styled_df.format({col: '{:.1f}' for col in df.select_dtypes(include=['float64', 'int64']).columns})
-
+    format_dict = {
+        col: ('{:.1f}' if col != "Originality" else lambda x: f"{x:.1f}%")
+        for col in df.select_dtypes(include=['float64', 'int64']).columns
+    }       
+    styled_df = styled_df.format(format_dict)
 
     # Generate HTML
     html_content = styled_df.to_html(index=True)
