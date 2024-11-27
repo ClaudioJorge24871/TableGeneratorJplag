@@ -7,7 +7,7 @@ def run_jplag(jplag_path, dir_source, dir_output):
     
     PARAMS:
         jplag_path - path to the jplag jar executable
-        dir_source - directory to the code submissions
+        dir_source - path to the code submissions
         dir_output - directory to the code results  
     """
 

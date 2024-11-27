@@ -22,6 +22,7 @@ def main():
     # Checks if theres a previous table on TABLEPATH
     if TABLEPATH.exists():
         try:
+            # Remove the existing table
             TABLEPATH.unlink()
         except Exception as e:
             print(f"Error deleting {TABLEPATH}: {e}")
@@ -33,7 +34,7 @@ def main():
     # Parse the results of JPLAG 
     parse_results(OUTPUTDIR,JSONFILEPATH)
 
-    # Generates a HTMl link with the table of comparisons
+    # Returns a dataframe with all the information of the comparison table
     dF = generate_comparison_table(JSONFILEPATH)
 
     # Style the table

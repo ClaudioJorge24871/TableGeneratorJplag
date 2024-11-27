@@ -9,7 +9,7 @@ def generate_comparison_table(json_file_path):
     
     Similarity Column is set by the max value of similarity the student got in a comparison
 
-    Originality Column represents the % of originlity. 
+    Originality Column represents the % of originality. 
         - Its calculated by dividing 100 with the number of times the student got similarity above the threshold 
 
     PARAMS:
@@ -66,12 +66,12 @@ def generate_comparison_table(json_file_path):
     originality_column = []
 
     for student_index in range(len(students)):
-        similarities = df.iloc[student_index] # Locates similarities by student index
-        max_similarity = similarities.max()
+        similarities = SimilarityMap.get(student_index,[]) # Locates similarities by student index
+        max_similarity = max(similarities)
         similarity_column.append(max_similarity)
 
         # Classifies as high_similarity if has a value above or equal to THRESHOLD
-        high_similarities = [sim for sim in SimilarityMap.get(student_index,[])
+        high_similarities = [sim for sim in similarities
                              if sim >= THRESHOLD]
         
         # Originality values as the times there was a high_similarity (starts at 100%) 

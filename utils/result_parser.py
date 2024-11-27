@@ -8,7 +8,8 @@ def parse_results(zip_file_path,json_file_path):
       given the path to the results file 
     
     PARAMS:
-        output_directory - path to the output folder
+        zip_file_path - path to the zipfile containing the results
+        json_file_path - path to put the final json file
     """
 
     output_directory = "./output"
@@ -19,6 +20,7 @@ def parse_results(zip_file_path,json_file_path):
         # List all files of the output_directory that end with ".json"
         json_files = [f for f in zip_ref.namelist() if f.endswith('.json')]
 
+        # Extract all json files on results
         for json_file in json_files:
             zip_ref.extract(json_file, output_directory)
 
@@ -31,7 +33,7 @@ def parse_results(zip_file_path,json_file_path):
     for file_name in json_files:
         file_path = os.path.join(output_directory, file_name)  # Creates the full path to file
     
-        # Ignores the files options, overview and submissionFileIndex
+        # Ignores the files 'options', 'overview' and 'submissionFileIndex'
         if file_name not in {"options.json", "overview.json", "submissionFileIndex.json"}: 
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
