@@ -34,7 +34,7 @@ def main():
     parse_results(OUTPUTDIR,JSONFILEPATH)
 
     # Generates a HTMl link with the table of comparisons
-    dF = generate_comparison_table(JSONFILEPATH,TABLEOUTPUT)
+    dF = generate_comparison_table(JSONFILEPATH)
 
     # Style the table
     html_content  = style_table(dF)

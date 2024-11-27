@@ -1,9 +1,8 @@
 import json
 import numpy as np
 import pandas as pd
-import os
 
-def generate_comparison_table(json_file_path,table_output):
+def generate_comparison_table(json_file_path):
     """
     Generates the comparison table given the path to the json file created
     The table has a list of students as its rows and columns

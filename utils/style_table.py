@@ -6,13 +6,19 @@ def style_table(df):
     
     def color_similarity(val):
         """Assign color classes based on similarity value."""
+
         if isinstance(val, (int, float)):
-            if val <= 20:
-                return 'background-color: green; color: white;'
-            elif val <= 70:
-                return 'background-color: yellow; color: black;'
+            if val <= 50 and val > 0:
+                op = 1 - (val / 70)
+                return f'background-color: rgba(128,255,128,{op}); color: black;'
+            elif val <= 90 and val > 0:
+                op = (val / 90) 
+                return f'background-color: rgba(255,174,0,{op}); color: black;'
+            elif val <= 100 and val > 0:
+                op = (val / 100)
+                return f'background-color: rgba(255,113,70,{op}); color: white;'
             else:
-                return 'background-color: red; color: white;'
+                return 'background-color: rgb(173,216,230); color: black;'
         return ''
     
     df = df.round(1)
