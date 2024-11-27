@@ -1,0 +1,68 @@
+/* styles.css */
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+/* Header row */
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Caption styling */
+caption {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+/* Styling for the similarity values */
+.similarity-cell {
+    color: white;
+    font-weight: bold;
+}
+
+.similarity-cell.green {
+    background-color: green;
+}
+
+.similarity-cell.yellow {
+    background-color: yellow;
+}
+
+.similarity-cell.red {
+    background-color: red;
+}
+
+/* Styling for the similarity column */
+.similarity-column.green {
+    background-color: green;
+}
+
+.similarity-column.yellow {
+    background-color: yellow;
+}
+
+.similarity-column.red {
+    background-color: red;
+}
+
+/* Optional: Styling for the title */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+}

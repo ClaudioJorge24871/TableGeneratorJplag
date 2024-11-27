@@ -1,6 +1,7 @@
 from utils.jplag_runner import run_jplag
 from utils.result_parser import parse_results
 from utils.tablegenerator import generate_comparison_table
+from utils.style_table import style_table
 import os
 from pathlib import Path
 import webbrowser
@@ -33,16 +34,23 @@ def main():
     parse_results(OUTPUTDIR,JSONFILEPATH)
 
     # Generates a HTMl link with the table of comparisons
-    generate_comparison_table(JSONFILEPATH,TABLEOUTPUT)
+    dF = generate_comparison_table(JSONFILEPATH,TABLEOUTPUT)
 
-    # After generating table, deletes auxiliary files
-    delete_files_except(TABLEOUTPUT,[TABLEPATH])
+    # Style the table
+    html_content  = style_table(dF)
+
+    # Save the styled HTML to the table output path
+    with open(TABLEPATH, 'w') as f:
+        f.write(html_content)
 
     # Opens the comparison table after creation
     try:
         webbrowser.open(f"file://{TABLEPATH.resolve()}")
     except Exception as e:
         print(f"Error opening the file in browser: {e}")
+
+    # After generating table, deletes auxiliary files
+    delete_files_except(TABLEOUTPUT,[TABLEPATH])
 
 def delete_files_except(folder_path, keep_files):
     """

@@ -86,7 +86,7 @@ def generate_comparison_table(json_file_path,table_output):
     df['Similarity'] = similarity_column
     df['Originality'] = originality_column
 
-    # Format the Originality column as percentages
+    # Format the Originality column as percentages and the numbers of Similarity
     df['Originality'] = df['Originality'].apply(lambda x: f"{x}%")
 
-    df.to_html(os.path.join(table_output, 'comparison_table.html'), index=True)
+    return df
