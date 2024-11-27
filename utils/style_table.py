@@ -1,6 +1,13 @@
 import pandas as pd
 
 def style_table(df):
+    """
+    Style the comparison table given by the DataFrame
+
+    PARAMS:
+        df - Dataframe 
+    """
+    # Raise an error if DataFrame doesnt exist
     if df is None:
         raise ValueError("The DataFrame is None, cannot style a NoneType object.")
     
@@ -10,25 +17,25 @@ def style_table(df):
             if is_originality:  # Logic for Originality (inverse colors)
                 if val <= 50 and val > 0:
                     op = 1 - (val / 70)
-                    return f'background-color: rgba(255,113,70,{op}); color: white;'  # Red
+                    return f'background-color: rgba(255,113,70,{op}); color: white;'  
                 elif val <= 90 and val > 0:
                     op = (val / 90)
-                    return f'background-color: rgba(255,174,0,{op}); color: black;'  # Orange
+                    return f'background-color: rgba(255,174,0,{op}); color: black;' 
                 elif val <= 100 and val > 0:
                     op = (val / 100)
-                    return f'background-color: rgba(128,255,128,{op}); color: black;'  # Green
+                    return f'background-color: rgba(128,255,128,{op}); color: black;'  
                 else:
                     return 'background-color: rgb(173,216,230); color: black;'  # Default Light Blue
             else:  # Logic for Similarity (original colors)
                 if val <= 50 and val > 0:
                     op = 1 - (val / 70)
-                    return f'background-color: rgba(128,255,128,{op}); color: black;'  # Green
+                    return f'background-color: rgba(128,255,128,{op}); color: black;'  
                 elif val <= 90 and val > 0:
                     op = (val / 90)
-                    return f'background-color: rgba(255,174,0,{op}); color: black;'  # Orange
+                    return f'background-color: rgba(255,174,0,{op}); color: black;' 
                 elif val <= 100 and val > 0:
                     op = (val / 100)
-                    return f'background-color: rgba(255,113,70,{op}); color: white;'  # Red
+                    return f'background-color: rgba(255,113,70,{op}); color: white;'  
                 else:
                     return 'background-color: rgb(173,216,230); color: black;'  # Default Light Blue
         return ''
@@ -37,7 +44,6 @@ def style_table(df):
         """Apply light-blue background to Students column."""
         return 'background-color: lightblue; color: black;'
     
-    df = df.round(1)
 
     # Create styled DataFrame
     styled_df = df.style\
@@ -54,6 +60,7 @@ def style_table(df):
                                         ('text-align', 'center')]},
         ])
 
+    # Dict to format the DF with 1 decimal point on numbers and % on Originality Column
     format_dict = {
         col: ('{:.1f}' if col != "Originality" else lambda x: f"{x:.1f}%")
         for col in df.select_dtypes(include=['float64', 'int64']).columns
@@ -63,7 +70,7 @@ def style_table(df):
     # Generate HTML
     html_content = styled_df.to_html(index=True)
 
-    # Optional: Wrap with full HTML structure
+    # Wrap with full HTML structure
     full_html = f"""
     <html>
     <head>
