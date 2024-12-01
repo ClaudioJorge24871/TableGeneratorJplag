@@ -5,17 +5,19 @@ from utils.style_table import style_table
 import os
 from pathlib import Path
 import webbrowser
+import sys
 
-# Get the absolute path of the project root
-PROJECT_ROOT = Path(__file__).resolve().parent
+if getattr(sys, 'frozen', False):  # Check if running as a bundled exe
+    BASE_PATH = Path(sys._MEIPASS) # Get the path of the temporary files created 
+else:
+    BASE_PATH = Path(__file__).resolve().parent # Get the path of the project root
 
-# Absolute Paths for params of methods 
-JPLAGPATH = PROJECT_ROOT / "jplag" / "jplag.jar"
-SOURCEDIR = PROJECT_ROOT / "data" / "Ficha03_041"
-OUTPUTDIR = PROJECT_ROOT / "output" / "results.zip"
-JSONFILEPATH = PROJECT_ROOT / "output" / "comparisons.json"
-TABLEOUTPUT = PROJECT_ROOT / "output"
-TABLEPATH = PROJECT_ROOT / "output" / "comparison_table.html"
+JPLAGPATH = BASE_PATH / "jplag" / "jplag.jar"
+SOURCEDIR = BASE_PATH / "data" / "Ficha03_041"
+OUTPUTDIR = BASE_PATH / "output" / "results.zip"
+TABLEOUTPUT = BASE_PATH / "output"
+TABLEPATH = BASE_PATH / "output" / "comparison_table.html"
+JSONFILEPATH = BASE_PATH / "output" / "comparisons.json"
 
 def main():
 
@@ -26,7 +28,6 @@ def main():
             TABLEPATH.unlink()
         except Exception as e:
             print(f"Error deleting {TABLEPATH}: {e}")
-
 
     # Run Jplag calling run_jplag method
     run_jplag(JPLAGPATH,SOURCEDIR,OUTPUTDIR)
@@ -72,7 +73,6 @@ def delete_files_except(folder_path, keep_files):
                 print(f"Deleted: {filename}")
             except Exception as e:
                 print(f"Error deleting {filename}: {e}")
-
 
 if __name__ == "__main__":
     main()
